@@ -34,9 +34,10 @@ export default class Creature {
       this.context.fillRect(position.x, position.y, 4, 4)
 
       image.src = Squeebs[Object.keys(Squeebs)[imageIndex]]
+      const test = Math.random()
       image.onload = () => {
         const ratio = image.width / image.height
-        const width = this.canvas.width * Math.random() / 3
+        const width = test * this.canvas.width / 3
         const height = width * ratio
 
         this.context.drawImage(image, position.x - width / 2, position.y - height / 2, width, height)
