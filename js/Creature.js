@@ -18,6 +18,8 @@ export default class Creature {
     this.blob.canvas = this.canvas
     this.blob.radius = 50
     this.blob.color = '#f24649'
+    this.blob.numPoints = Math.ceil(Math.random() * 4)
+    // this.blob.numPoints = 3
     this.blob.init()
     this.blob.render()
   }
@@ -34,13 +36,19 @@ export default class Creature {
       this.context.fillRect(position.x, position.y, 4, 4)
 
       image.src = Squeebs[Object.keys(Squeebs)[imageIndex]]
-      const test = Math.random()
+      const randomNumber = Math.random() // used to keep random consistent during asynchronous image loading
+
       image.onload = () => {
         const ratio = image.width / image.height
-        const width = test * this.canvas.width / 3
+        const width = randomNumber * this.canvas.width / 3
         const height = width * ratio
-
+        this.context.save()
+        // this.context.moveTo(position.x, position.y)
+        // this.context.rotate(Math.sin(Math.random()) / 10)
+        // this.context.drawImage(image, 0 - width / 2, 0 - height / 2, width, height)
         this.context.drawImage(image, position.x - width / 2, position.y - height / 2, width, height)
+
+        this.context.restore()
       }
     }
   }

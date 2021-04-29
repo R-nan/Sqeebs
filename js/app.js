@@ -13,4 +13,4 @@ const App = (code) => {
   const creature = new Creature(canvas, context)
 }
 
-App('squweebs') // take out parameter for random on refresh
+App() // take out parameter for random on refresh
