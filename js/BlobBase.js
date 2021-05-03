@@ -4,6 +4,8 @@ import Point from './Point.js';
 export default class BlobBase {
   constructor() {
     this.points = [];
+    this.farthestDiffX = 0;
+    this.farthestDiffY = 0;
   }
   
   init() {
@@ -12,6 +14,7 @@ export default class BlobBase {
       point.acceleration = -1 + Math.random() * 20;
       this.push(point);
     }
+    console.log(this.points)
   }
   
   render() {
@@ -31,7 +34,6 @@ export default class BlobBase {
     let p0 = pointsArray[points-1].position;
     let p1 = pointsArray[0].position;
     let _p2 = p1;
-
     ctx.beginPath();
     ctx.moveTo(center.x, center.y);
     ctx.moveTo( (p0.x + p1.x) / 2, (p0.y + p1.y) / 2 );
@@ -48,6 +50,17 @@ export default class BlobBase {
 
       ctx.fillStyle = '#000000';
       // ctx.fillRect(p1.x-2.5, p1.y-2.5, 5, 5);
+
+      // Calculate point's dist from center and compare against stored current farthest diff
+      // We'll use farthest diff values to populate bit anchor points (b/c I can't figure out how to get size of blob)
+      const xDiff = this.center.x - p2.x;
+      const yDiff = this.center.y - p2.y;
+      if (xDiff > this.farthestDiffX) {
+        this.farthestDiffX = xDiff;
+      }
+      if (yDiff > this.farthestDiffY) {
+        this.farthestDiffY = yDiff;
+      }
 
       p1 = p2;
     }
